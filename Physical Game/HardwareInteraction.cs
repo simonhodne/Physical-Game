@@ -5,6 +5,7 @@ namespace Physical_Game
 {
     public class HardwareInteraction
     {
+        public const int TOGGLE_ALL = -1;
         GpioController controller;
         GpioPin led0;
         GpioPin led1;
@@ -20,7 +21,7 @@ namespace Physical_Game
         GpioPin button4;
         GpioPin button5;
         GpioPin button6;
-        HardwareInteraction()
+        public HardwareInteraction()
         {
             controller = new GpioController();
             led0 = controller.OpenPin(4, PinMode.Output);
@@ -30,13 +31,13 @@ namespace Physical_Game
             led4 = controller.OpenPin(18, PinMode.Output);
             led5 = controller.OpenPin(19, PinMode.Output);
             led6 = controller.OpenPin(21, PinMode.Output);
-            button0 = controller.OpenPin(32, PinMode.InputPullDown);
-            button1 = controller.OpenPin(33, PinMode.InputPullDown);
-            button2 = controller.OpenPin(25, PinMode.InputPullDown);
-            button3 = controller.OpenPin(26, PinMode.InputPullDown);
-            button4 = controller.OpenPin(27, PinMode.InputPullDown);
-            button5 = controller.OpenPin(13, PinMode.InputPullDown);
-            button6 = controller.OpenPin(22, PinMode.InputPullDown);
+            button0 = controller.OpenPin(32, PinMode.InputPullUp);
+            button1 = controller.OpenPin(33, PinMode.InputPullUp);
+            button2 = controller.OpenPin(25, PinMode.InputPullUp);
+            button3 = controller.OpenPin(26, PinMode.InputPullUp);
+            button4 = controller.OpenPin(27, PinMode.InputPullUp);
+            button5 = controller.OpenPin(13, PinMode.InputPullUp);
+            button6 = controller.OpenPin(22, PinMode.InputPullUp);
         }
 
         public void ToggleLed(int ledNumber)
@@ -64,9 +65,63 @@ namespace Physical_Game
                 case 6:
                     led6.Toggle();
                     break;
+                case TOGGLE_ALL:
+                    led0.Toggle();
+                    led1.Toggle();
+                    led2.Toggle();
+                    led3.Toggle();
+                    led4.Toggle();
+                    led5.Toggle();
+                    led6.Toggle();
+                    break;
                 default:
                     break;
             }
+        }
+
+        public int GetInput()
+        {
+            bool buttonNotPressed = true;
+            int pressedButtonNumber = -1;
+            while(buttonNotPressed)
+            {
+                if (button0.Read() == PinValue.Low)
+                {
+                    buttonNotPressed = false;
+                    pressedButtonNumber = 0;
+                }
+                else if (button1.Read() == PinValue.Low)
+                {
+                    buttonNotPressed = false;
+                    pressedButtonNumber = 1;
+                }
+                else if (button2.Read() == PinValue.Low)
+                {
+                    buttonNotPressed = false;
+                    pressedButtonNumber = 2;
+                }
+                else if (button3.Read() == PinValue.Low)
+                {
+                    buttonNotPressed = false;
+                    pressedButtonNumber = 3;
+                }
+                else if (button4.Read() == PinValue.Low)
+                {
+                    buttonNotPressed = false;
+                    pressedButtonNumber = 4;
+                }
+                else if (button5.Read() == PinValue.Low)
+                {
+                    buttonNotPressed = false;
+                    pressedButtonNumber = 5;
+                }
+                else if (button6.Read() == PinValue.Low)
+                {
+                    buttonNotPressed = false;
+                    pressedButtonNumber = 6;
+                }
+            }
+            return pressedButtonNumber;
         }
     }
 }
