@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Include="GameLogic.cs" />
     <Compile Include="HardwareInteraction.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
