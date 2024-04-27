@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Device.Gpio;
+using System.Threading;
 
 namespace Physical_Game
 {
     public class HardwareInteraction
     {
+        #region Variables
+
         public const int TOGGLE_ALL = -1;
+        public const int CENTER_LED = 3;
         GpioController controller;
         GpioPin led0;
         GpioPin led1;
@@ -21,6 +25,10 @@ namespace Physical_Game
         GpioPin button4;
         GpioPin button5;
         GpioPin button6;
+
+        #endregion
+
+        #region Functions
         public HardwareInteraction()
         {
             controller = new GpioController();
@@ -123,5 +131,18 @@ namespace Physical_Game
             }
             return pressedButtonNumber;
         }
+
+        public void FlashLed(int ledNumber, int flashAmount, int flashTime, HardwareInteraction hardware)
+        {
+            for(int i = 0; i < flashAmount; i++)
+            {
+                hardware.ToggleLed(ledNumber);
+                Thread.Sleep(flashTime);
+                hardware.ToggleLed(ledNumber);
+                Thread.Sleep(flashTime);
+            }
+        }
+
+        #endregion
     }
 }

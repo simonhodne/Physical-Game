@@ -10,20 +10,21 @@ namespace Physical_Game
         public static void Main()
         {
             HardwareInteraction hardware = new();
-            hardware.ToggleLed(HardwareInteraction.TOGGLE_ALL);
-            Thread.Sleep(1000);
-            hardware.ToggleLed(HardwareInteraction.TOGGLE_ALL);
-            hardware.ToggleLed(3);
+            hardware.FlashLed(HardwareInteraction.TOGGLE_ALL, 1, 2000, hardware);
+            hardware.ToggleLed(HardwareInteraction.CENTER_LED);
 
             while(isPlaying)
             {
-                if (hardware.GetInput() == 3)
+                if (hardware.GetInput() == HardwareInteraction.CENTER_LED)
                 {
                     GameLogic game = new GameLogic(hardware);
                 }
                 else if(hardware.GetInput() == 0)
                 {
-                    isPlaying = false;
+                    if (hardware.GetInput() == HardwareInteraction.CENTER_LED)
+                    {
+                        isPlaying = false;
+                    }
                 }
             }
 
