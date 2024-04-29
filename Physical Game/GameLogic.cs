@@ -39,6 +39,7 @@ namespace Physical_Game
         void RunGame()
         {
             stopWatch.Start();
+            Log.WriteToLog(Log.START);
             while(isRunning)
             {
                 do
