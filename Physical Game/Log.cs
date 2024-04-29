@@ -15,7 +15,7 @@ namespace Physical_Game
         public const int FAIL_BUTTON = 1;
         public const int FAIL_TIME = 2;
 
-        private const string START_STRING = "[START]";
+        private const string START_STRING = "[START]: ";
         private const string STOP_STRING = "[END]";
         private const string TIME_STRING = "[TIME]: ";
         private const string FAIL_BUTTON_STRING = "[FAIL]: WrongButton";
