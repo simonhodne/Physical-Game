@@ -52,13 +52,16 @@ namespace Physical_Game
 
                 if(hardware.GetInput() != currentButton)
                 {
+                    Log.WriteToLog(Log.STOP, Log.FAIL_BUTTON);
                     isRunning = false;
                 }
                 
                 timeActual = stopWatch.ElapsedMilliseconds - timeOfLightUp;
+                Log.WriteToLog(Log.TIME,0, timeActual.ToString());
                 
                 if(timeActual > currentTimeLimit)
                 {
+                    Log.WriteToLog(Log.STOP, Log.FAIL_TIME);
                     isRunning = false;
                 }
 
