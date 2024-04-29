@@ -13,7 +13,8 @@ namespace Physical_Game
         Stopwatch stopWatch;
         bool isRunning = true;
         int currentButton;
-        int currentTimeLimit = 2000;
+        int previousButton = -1;
+        int currentTimeLimit = 3000;
         long time;
 
         #endregion
@@ -39,7 +40,12 @@ namespace Physical_Game
             stopWatch.Start();
             while(isRunning)
             {
-                currentButton = random.Next(7);
+                do
+                {
+                    currentButton = random.Next(7);
+                }
+                while (currentButton == previousButton);
+                
                 hardware.ToggleLed(currentButton);
                 time = stopWatch.ElapsedMilliseconds;
 
@@ -52,12 +58,13 @@ namespace Physical_Game
                 {
                     isRunning = false;
                 }
-                if(currentTimeLimit > 1000)
+                if(currentTimeLimit > 1500)
                 {
                     currentTimeLimit -= 50;
                 }
                 hardware.ToggleLed(currentButton);
-                Thread.Sleep(500);
+                previousButton = currentButton;
+                Thread.Sleep(250);
             }
             EndGame();
         }
