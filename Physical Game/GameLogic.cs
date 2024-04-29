@@ -15,7 +15,8 @@ namespace Physical_Game
         int currentButton;
         int previousButton = -1;
         int currentTimeLimit = 3000;
-        long time;
+        long timeOfLightUp;
+        long timeActual;
 
         #endregion
 
@@ -47,21 +48,25 @@ namespace Physical_Game
                 while (currentButton == previousButton);
                 
                 hardware.ToggleLed(currentButton);
-                time = stopWatch.ElapsedMilliseconds;
+                timeOfLightUp = stopWatch.ElapsedMilliseconds;
 
                 if(hardware.GetInput() != currentButton)
                 {
                     isRunning = false;
                 }
-
-                if(time + currentTimeLimit < stopWatch.ElapsedMilliseconds)
+                
+                timeActual = stopWatch.ElapsedMilliseconds - timeOfLightUp;
+                
+                if(timeActual > currentTimeLimit)
                 {
                     isRunning = false;
                 }
+
                 if(currentTimeLimit > 1500)
                 {
                     currentTimeLimit -= 50;
                 }
+
                 hardware.ToggleLed(currentButton);
                 previousButton = currentButton;
                 Thread.Sleep(250);
